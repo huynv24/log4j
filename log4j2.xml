@@ -1,0 +1,24 @@
+<Configuration name="MyApp" packages="" status="warn">
+  <Appenders>
+    <Console ignoreExceptions="false" name="STDOUT" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </Console>
+    <RollingFile fileName="logs/app.log" filePattern="logs/app-%d{MM-dd-yyyy}.log.gz"
+                 ignoreExceptions="false" name="RollingFile">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+      <Policies>
+        <OnStartupTriggeringPolicy/>
+        <TimeBasedTriggeringPolicy interval="1"/>
+        <SizeBasedTriggeringPolicy size="50 MB"/>
+      </Policies>
+      <DefaultRolloverStrategy max="30"/>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Root level="debug">
+      <AppenderRef ref="RollingFile"/>
+    </Root>
+    <logger additivity="false" level="INFO" name="io.netty"/>
+    <logger additivity="false" level="INFO" name="io.grpc"/>
+  </Loggers>
+</Configuration>
